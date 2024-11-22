@@ -8,7 +8,7 @@
  * @return string Full URL for the page.
  */
 function url($page, $params = []) {
-    $baseUrl = "http://localhost/e-report/public"; // Change this to your app's base URL
+    $baseUrl = "http://localhost/e-report/public";
     $queryString = http_build_query($params);
     return $baseUrl . "/?page=" . $page . ($queryString ? "&" . $queryString : "");
 }

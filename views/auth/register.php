@@ -1,6 +1,8 @@
-<?php 
+<?php
 $page_title = 'Register';
-require_once '../views/layout/header.php'; 
+require_once '../views/layout/header.php';
+require_once '../helpers/auth_helper.php';
+requireGuest();
 ?>
 
 <main>
@@ -8,21 +10,25 @@ require_once '../views/layout/header.php';
     <form action="<?= url('doRegister'); ?>" method="POST">
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" name="name" id="name" required>
+            <input type="text" name="name" id="name">
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
+            <input type="email" name="email" id="email">
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required>
+            <input type="password" name="password" id="password">
         </div>
         <div class="form-group">
             <label for="confirm-password">Confirm Password:</label>
-            <input type="password" name="confirm-password" id="confirm-password" required>
+            <input type="password" name="confirm-password" id="confirm-password">
         </div>
-        
+
+        <?php if (isset($error)): ?>
+            <p style="color: red;"><?= $error ?></p>
+        <?php endif; ?>
+
         <button class="btn" type="submit">Register</button>
     </form>
     <p>Already have an account? <a class="a-link" href="<?= url('login'); ?>">Login here</a>.</p>

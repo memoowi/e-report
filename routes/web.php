@@ -9,22 +9,19 @@ require_once '../controllers/AuthController.php';
 // Define routing logic
 $page = $_GET['page'] ?? 'home'; // Default route
 
+$authController = new AuthController();
+
 // Authentication routes
 if ($page === 'login') {
-    $authController = new AuthController();
     $authController->showLoginForm();
 } elseif ($page === 'register') {
-    $authController = new AuthController();
     $authController->showRegisterForm();
-// } elseif ($page === 'doLogin') {
-//     $authController = new AuthController();
-//     $authController->login();
-// } elseif ($page === 'doRegister') {
-//     $authController = new AuthController();
-//     $authController->register();
-// } elseif ($page === 'logout') {
-//     $authController = new AuthController();
-//     $authController->logout();
+} elseif ($page === 'doLogin') {
+    $authController->login();
+} elseif ($page === 'doRegister') {
+    $authController->register();
+} elseif ($page === 'logout') {
+    $authController->logout();
 
 // // Report routes
 // } elseif ($page === 'reports') {
