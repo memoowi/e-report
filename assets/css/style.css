@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #007BFF;
+    --secondary-color: #6c757d;
+    --complement-color: #ffae00;
+    --red-color: #dc3545;
+    --padding-container: 20px 40px;
+    --padding-btn: 10px 20px;
+    --gap:20px;
+    --border-radius: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+body {
+    background-color: var(--background-color);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-container);
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+    font-weight: 500;
+}
+
+.btn {
+    background-color:  var(--primary-color);
+    color: #fff;
+    padding: var(--padding-btn);
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+}
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
+    transition: width 0.3s ease-in-out;
+}
+.btn:hover::before {
+    width: 100%;
+}
+.login-btn {
+    background-color: #fff;
+    color: var(--primary-color);
+}
+.register-btn {
+    background-color: var(--complement-color);
+}
+.logout-btn {
+    background-color: var(--red-color);
+}
