@@ -1,6 +1,7 @@
 <?php
 
 // Import necessary controllers
+require_once '../helpers/url_helper.php';
 require_once '../controllers/AuthController.php';
 // require_once '../controllers/ReportController.php';
 // require_once '../controllers/CommentController.php';
@@ -12,9 +13,9 @@ $page = $_GET['page'] ?? 'home'; // Default route
 if ($page === 'login') {
     $authController = new AuthController();
     $authController->showLoginForm();
-// } elseif ($page === 'register') {
-//     $authController = new AuthController();
-//     $authController->showRegisterForm();
+} elseif ($page === 'register') {
+    $authController = new AuthController();
+    $authController->showRegisterForm();
 // } elseif ($page === 'doLogin') {
 //     $authController = new AuthController();
 //     $authController->login();

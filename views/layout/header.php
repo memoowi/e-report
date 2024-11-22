@@ -11,9 +11,9 @@
     <header>
         <h1>E-Report</h1>
         <nav>
-            <a class="btn home-btn" href="/?page=home">Home</a>
-            <a class="btn login-btn" href="/?page=login">Login</a>
-            <a class="btn register-btn" href="/?page=register">Register</a>
+            <a class="btn home-btn" href="./?page=home">Home</a>
+            <a class="btn login-btn" href="./?page=login">Login</a>
+            <a class="btn register-btn" href="./?page=register">Register</a>
             <a class="btn logout-btn" href="/?page=logout">Logout</a>
         </nav>
     </header>
