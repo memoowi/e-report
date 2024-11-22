@@ -144,3 +144,16 @@ form {
 .a-link:hover {
     text-decoration: underline;
 }
+.password-container {
+    position: relative;
+}
+.password-container input {
+    width: 100%;
+}
+.password-container i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

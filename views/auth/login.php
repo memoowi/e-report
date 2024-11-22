@@ -14,7 +14,10 @@ requireGuest();
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" name="password" id="password">
+            <div class="password-container">
+                <input type="password" name="password" id="password">
+                <i class="fas fa-eye" onclick="togglePassoword('password', 'eye')" id="eye"></i>
+            </div>
         </div>
 
         <?php if (isset($error)): ?>
