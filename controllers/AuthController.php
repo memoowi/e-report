@@ -17,6 +17,10 @@ class AuthController
 
     public function showLoginForm()
     {
+        if (isAuthenticated()) {
+            redirect('home');
+            exit;
+        }
         require_once '../views/auth/login.php';
     }
 
@@ -66,6 +70,10 @@ class AuthController
 
     public function showRegisterForm()
     {
+        if (isAuthenticated()) {
+            redirect('home');
+            exit;
+        }
         require_once '../views/auth/register.php';
     }
 

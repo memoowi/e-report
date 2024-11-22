@@ -1,8 +1,6 @@
 <?php
 $page_title = 'Register';
 require_once '../views/layout/header.php';
-require_once '../helpers/auth_helper.php';
-requireGuest();
 ?>
 
 <main>
