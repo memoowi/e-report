@@ -23,6 +23,16 @@ class Report
         return $stmt->execute();
     }
 
+    // Read all reports of a user
+    public function getByUserId($user_id)
+    {
+        $sql = "SELECT * FROM reports WHERE user_id = :user_id ORDER BY updated_at DESC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Read all reports
     public function getAll()
     {

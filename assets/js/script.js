@@ -10,3 +10,7 @@ function togglePassoword(inputId) {
     this.classList.add("fa-eye");
   }
 }
+
+function openImage(urlImage) {
+  window.open(urlImage, '_blank');
+}

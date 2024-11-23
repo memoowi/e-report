@@ -28,9 +28,11 @@ if ($page === 'login') {
 // } elseif ($page === 'reports') {
 //     $reportController = new ReportController();
 //     $reportController->index(); // Show all reports
-} elseif ($page === 'report_create') {
+} elseif ($page === 'report-view') {
+    $reportController->show($_GET['id']); // Show a single report
+} elseif ($page === 'report-create') {
     $reportController->create(); // Show form to create a report
-} elseif ($page === 'report_store') {
+} elseif ($page === 'report-store') {
     $reportController->store(); // Handle form submission for new report
 // } elseif ($page === 'report_edit') {
 //     $reportController = new ReportController();
@@ -38,9 +40,8 @@ if ($page === 'login') {
 // } elseif ($page === 'report_update') {
 //     $reportController = new ReportController();
 //     $reportController->update($_POST['id']); // Handle report update
-// } elseif ($page === 'report_delete') {
-//     $reportController = new ReportController();
-//     $reportController->delete($_GET['id']); // Handle report deletion
+} elseif ($page === 'report-delete') {
+    $reportController->delete($_GET['id']); // Handle report deletion
 
 // // Comment routes
 // } elseif ($page === 'comment_store') {
@@ -52,7 +53,7 @@ if ($page === 'login') {
 
 // Default route
 } elseif ($page === 'home') {
-    require_once '../views/home.php';
+    $reportController->index();
 } else {
     require_once '../views/error-page.php';
 }

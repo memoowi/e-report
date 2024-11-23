@@ -14,6 +14,37 @@ class ReportController
         $this->reportModel = new Report();
     }
 
+    public function index()
+    {
+        if (!isAuthenticated()) {
+            redirect('login');
+            exit;
+        }
+        $reports = $this->reportModel->getByUserId($_SESSION['user']['id']);
+
+        require_once '../views/reports/home.php';
+    }
+
+    public function show($id)
+    {
+        if (!isAuthenticated()) {
+            redirect('login');
+            exit;
+        }
+        $report = $this->reportModel->getById($id);
+
+        if (!$report) {
+            $error = "Report not found";
+            require_once '../views/error-page.php';
+        } else {
+            if ($report['user_id'] !== $_SESSION['user']['id']) {
+                $error = "You don't have permission to view this report";
+                require_once '../views/error-page.php';
+            }
+            require_once '../views/reports/view.php';
+        }
+    }
+
     public function create()
     {
         if (!isAuthenticated()) {
@@ -73,11 +104,6 @@ class ReportController
         }
     }
 
-    // public function index() {
-    //     require_once '../views/reports/list.php';
-    // }
-
-
     // public function edit($id) {
     //     require_once '../views/reports/edit.php';
     // }
@@ -87,8 +113,23 @@ class ReportController
     //     echo "Updating report with ID: $id";
     // }
 
-    // public function delete($id) {
-    //     // Handle deleting a report
-    //     echo "Deleting report with ID: $id";
-    // }
+    public function delete($id)
+    {
+        if (!isAuthenticated()) {
+            redirect('login');
+            exit;
+        } else {
+            $report = $this->reportModel->getById($id);
+            if ($report['user_id'] !== $_SESSION['user']['id']) {
+                $error = "You don't have permission to delete this report";
+                require_once '../views/error-page.php';
+            } else {
+                if ($report['attachment']) {
+                    unlink('./uploads/' . $report['attachment']);
+                }
+                $this->reportModel->delete($id);
+                redirect('home');
+            }
+        }
+    }
 }

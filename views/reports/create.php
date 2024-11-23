@@ -14,7 +14,7 @@ require_once '../views/layout/header.php';
             <i class="fas fa-plus"></i>
         </a> -->
 
-        <form action="<?= url('report_store'); ?>" method="POST" enctype="multipart/form-data">
+        <form action="<?= url('report-store'); ?>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" name="title" id="title">

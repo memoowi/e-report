@@ -198,6 +198,9 @@ table {
     border-radius: var(--border-radius);
     overflow: hidden;
 }
+tr {
+    transition: background-color 0.3s ease-in-out;
+}
 th, td {
     padding: 10px;
     text-align: left;
@@ -209,4 +212,45 @@ th {
 }
 tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+tr:hover {
+    background-color: #ddd;
+}
+.no-reports {
+    text-align: center;
+    margin-top: 20px;
+}
+.actions {
+    display: flex;
+    gap: 10px;
+}
+.view-btn {
+    background-color: var(--secondary-color);
+}
+.edit-btn {
+    background-color: var(--complement-color);
+}
+.delete-btn {
+    background-color: var(--red-color);
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    padding: 40px;
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    margin: 0 auto;
+}
+
+article > img {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
 }
