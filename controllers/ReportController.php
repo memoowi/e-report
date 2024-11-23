@@ -169,7 +169,6 @@ class ReportController
                     require_once '../views/reports/edit.php';
                 }
             } else {
-                // dont change attachment
                 $this->reportModel->update($id, $title, $description, $report['attachment']);
                 redirect('home');
             }

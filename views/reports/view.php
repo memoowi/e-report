@@ -1,6 +1,7 @@
 <?php
 $page_title = 'View Report';
 require_once '../views/layout/header.php';
+require_once '../helpers/date_helper.php';
 ?>
 
 <main>
@@ -28,10 +29,10 @@ require_once '../views/layout/header.php';
             <p><?= $report['status']; ?></p>
 
             <h4>Created At:</h4>
-            <p><?= $report['created_at']; ?></p>
+            <p><?= format_date($report['created_at']) ?></p>
 
             <h4>Updated At:</h4>
-            <p><?= $report['updated_at']; ?></p>
+            <p><?= format_date($report['updated_at']) ?></p>
 
             <div class="actions">
                 <a class="btn edit-btn" href="<?= url('report-edit', ['id' => $report['id']]); ?>">

@@ -1,6 +1,7 @@
 <?php
 $page_title = 'Home';
 require_once '../views/layout/header.php';
+require_once '../helpers/date_helper.php';
 ?>
 
 <main>
@@ -40,8 +41,8 @@ require_once '../views/layout/header.php';
                             <td><?= $report['title']; ?></td>
                             <td><?= $report['description']; ?></td>
                             <td><?= $report['status']; ?></td>
-                            <td><?= $report['created_at']; ?></td>
-                            <td><?= $report['updated_at']; ?></td>
+                            <td><?= format_date($report['created_at']) ?></td>
+                            <td><?= format_date($report['updated_at']) ?></td>
                             <td class="actions">
                                 <a class="btn view-btn" href="<?= url('report-view', ['id' => $report['id']]); ?>">
                                     <i class="fas fa-eye"></i>
