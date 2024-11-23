@@ -34,12 +34,10 @@ if ($page === 'login') {
     $reportController->create(); // Show form to create a report
 } elseif ($page === 'report-store') {
     $reportController->store(); // Handle form submission for new report
-// } elseif ($page === 'report_edit') {
-//     $reportController = new ReportController();
-//     $reportController->edit($_GET['id']); // Show form to edit a report
-// } elseif ($page === 'report_update') {
-//     $reportController = new ReportController();
-//     $reportController->update($_POST['id']); // Handle report update
+} elseif ($page === 'report-edit') {
+    $reportController->edit($_GET['id']); // Show form to edit a report
+} elseif ($page === 'report-update') {
+    $reportController->update($_POST['id']); // Handle report update
 } elseif ($page === 'report-delete') {
     $reportController->delete($_GET['id']); // Handle report deletion
 

@@ -53,13 +53,13 @@ class Report
     }
 
     // Update a report
-    public function update($id, $title, $description, $status)
+    public function update($id, $title, $description, $attachment)
     {
-        $sql = "UPDATE reports SET title = :title, description = :description, status = :status WHERE id = :id";
+        $sql = "UPDATE reports SET title = :title, description = :description, attachment = :attachment, updated_at = NOW() WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':title', $title, PDO::PARAM_STR);
         $stmt->bindParam(':description', $description, PDO::PARAM_STR);
-        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        $stmt->bindParam(':attachment', $attachment, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }

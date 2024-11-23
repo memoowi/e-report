@@ -104,14 +104,77 @@ class ReportController
         }
     }
 
-    // public function edit($id) {
-    //     require_once '../views/reports/edit.php';
-    // }
+    public function edit($id)
+    {
+        if (!isAuthenticated()) {
+            redirect('login');
+            exit;
+        } else {
+            $report = $this->reportModel->getById($id);
+            if ($report['user_id'] !== $_SESSION['user']['id']) {
+                $error = "You don't have permission to edit this report";
+                require_once '../views/error-page.php';
+            } else {
+                require_once '../views/reports/edit.php';
+            }
+        }
+    }
 
-    // public function update($id) {
-    //     // Handle updating an existing report in the database
-    //     echo "Updating report with ID: $id";
-    // }
+    public function update($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $title = $_POST['title'] ?? '';
+            $description = $_POST['description'] ?? '';
+            $attachment = $_FILES['attachment'] ?? null;
+
+            if (empty($title) || empty($description)) {
+                $error = "Title and Description fields are required";
+                require_once '../views/reports/edit.php';
+                return;
+            }
+
+            $title = sanitizeString($title);
+            $description = sanitizeString($description);
+            $report = $this->reportModel->getById($id);
+
+            if ($attachment && $attachment['error'] === UPLOAD_ERR_OK) {
+                $allowedExtensions = ['jpg', 'jpeg', 'png'];
+                $fileExtension = strtolower(pathinfo($attachment['name'], PATHINFO_EXTENSION));
+
+                if (!in_array($fileExtension, $allowedExtensions)) {
+                    $error = "Only accept images (.jpg, .jpeg, .png).";
+                    require_once '../views/reports/edit.php';
+                    return;
+                }
+
+                if ($attachment['size'] > 5 * 1024 * 1024) {
+                    $error = "Maximum file size is 5MB.";
+                    require_once '../views/reports/edit.php';
+                    return;
+                }
+
+                if ($report['attachment']) {
+                    unlink('./uploads/' . $report['attachment']);
+                }
+
+                $fileName = time() . '-' . uniqid() . '.' . $fileExtension;
+                $uploadDir = './uploads/';
+                $uploadPath = $uploadDir . $fileName;
+
+                if (move_uploaded_file($attachment['tmp_name'], $uploadPath)) {
+                    $this->reportModel->update($id, $title, $description, $fileName);
+                    redirect('home');
+                } else {
+                    $error = "Failed to upload file.";
+                    require_once '../views/reports/edit.php';
+                }
+            } else {
+                // dont change attachment
+                $this->reportModel->update($id, $title, $description, $report['attachment']);
+                redirect('home');
+            }
+        }
+    }
 
     public function delete($id)
     {
