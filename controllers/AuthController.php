@@ -53,8 +53,7 @@ class AuthController
             if ($user) {
                 if (password_verify($password, $user['password'])) {
                     session_start();
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['role'] = $user['role'];
+                    $_SESSION['user'] = $user;
                     session_regenerate_id(true);  
                     redirect('home'); 
                 } else {
@@ -129,8 +128,7 @@ class AuthController
             if ($this->userModel->createUser($name, $email, $password)) {
                 $user = $this->userModel->getUserByEmail($email);
                 session_start();
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['role'] = $user['role'];
+                $_SESSION['user'] = $user;
                 session_regenerate_id(true);
                 redirect('home');
             } else {

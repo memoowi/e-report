@@ -8,7 +8,7 @@ session_start();
  * @return bool
  */
 function isAuthenticated() {
-    return isset($_SESSION['user_id']);
+    return isset($_SESSION['user']);
 }
 
 /**
@@ -34,7 +34,7 @@ function requireGuest() {
  * @return bool
  */
 function isAdmin() {
-    return isset($_SESSION['user_id']) && $_SESSION['role'] === 'admin';
+    return isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin';
 }
 
 /**
