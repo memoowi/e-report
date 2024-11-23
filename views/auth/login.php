@@ -5,7 +5,7 @@ require_once '../views/layout/header.php';
 
 <main>
     <h2>Login</h2>
-    <form action="<?= url('doLogin'); ?>" method="POST">
+    <form class="auth-form" action="<?= url('doLogin'); ?>" method="POST">
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" name="email" id="email">

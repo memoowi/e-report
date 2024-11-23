@@ -10,7 +10,7 @@ requireAuth();
 
     <section>
         <h3>Create a Report</h3>
-        <p>Use this form to create a new report.</p>
+        <p>Report your problems here.</p>
         <a class="btn" href="<?= url('report_create'); ?>">
             Create Report &nbsp;
             <i class="fas fa-plus"></i>

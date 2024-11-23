@@ -5,7 +5,7 @@ require_once '../views/layout/header.php';
 
 <main>
     <h2>Register</h2>
-    <form action="<?= url('doRegister'); ?>" method="POST">
+    <form class="auth-form" action="<?= url('doRegister'); ?>" method="POST">
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" name="name" id="name">

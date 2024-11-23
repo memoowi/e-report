@@ -3,13 +3,14 @@
 // Import necessary controllers
 require_once '../helpers/url_helper.php';
 require_once '../controllers/AuthController.php';
-// require_once '../controllers/ReportController.php';
+require_once '../controllers/ReportController.php';
 // require_once '../controllers/CommentController.php';
 
 // Define routing logic
 $page = $_GET['page'] ?? 'home'; // Default route
 
 $authController = new AuthController();
+$reportController = new ReportController();
 
 // Authentication routes
 if ($page === 'login') {
@@ -27,12 +28,10 @@ if ($page === 'login') {
 // } elseif ($page === 'reports') {
 //     $reportController = new ReportController();
 //     $reportController->index(); // Show all reports
-// } elseif ($page === 'report_create') {
-//     $reportController = new ReportController();
-//     $reportController->create(); // Show form to create a report
-// } elseif ($page === 'report_store') {
-//     $reportController = new ReportController();
-//     $reportController->store(); // Handle form submission for new report
+} elseif ($page === 'report_create') {
+    $reportController->create(); // Show form to create a report
+} elseif ($page === 'report_store') {
+    $reportController->store(); // Handle form submission for new report
 // } elseif ($page === 'report_edit') {
 //     $reportController = new ReportController();
 //     $reportController->edit($_GET['id']); // Show form to edit a report
