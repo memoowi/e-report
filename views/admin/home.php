@@ -1,25 +1,24 @@
 <?php
-$page_title = 'Home';
+$page_title = 'Admin Home';
 require_once '../views/layout/header.php';
 require_once '../helpers/date_helper.php';
-require_once '../helpers/auth_helper.php';
 ?>
 
 <main>
     <h2>Welcome, <span><?php echo $_SESSION['user']['name']; ?></span></h2>
 
-    <section>
+    <!-- <section>
         <h3>Create a Report</h3>
         <p>Report your problems here.</p>
         <a class="btn" href="<?= url('report-create'); ?>">
             Create Report &nbsp;
             <i class="fas fa-plus"></i>
         </a>
-    </section>
+    </section> -->
 
     <section>
-        <h3>Recent Reports</h3>
-        <p>Here are your recent reports.</p>
+        <h3>All Reports</h3>
+        <p>Here are all recent reports.</p>
         <table>
             <thead>
                 <tr>
@@ -51,9 +50,9 @@ require_once '../helpers/auth_helper.php';
                                 <a class="btn edit-btn" href="<?= url('report-edit', ['id' => $report['id']]); ?>">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a class="btn delete-btn" href="<?= url('report-delete', ['id' => $report['id']]); ?>">
+                                <!-- <a class="btn delete-btn" href="<?= url('report-delete', ['id' => $report['id']]); ?>">
                                     <i class="fas fa-trash"></i>
-                                </a>
+                                </a> -->
                             </td>
                         </tr>
                 <?php endforeach;

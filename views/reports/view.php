@@ -2,6 +2,7 @@
 $page_title = 'View Report';
 require_once '../views/layout/header.php';
 require_once '../helpers/date_helper.php';
+require_once '../helpers/auth_helper.php';
 ?>
 
 <main>
@@ -28,6 +29,9 @@ require_once '../helpers/date_helper.php';
             <h4>Status:</h4>
             <p><?= $report['status']; ?></p>
 
+            <h4>Response:</h4>
+            <p><?= $report['response'] ?? 'No response'; ?></p>
+
             <h4>Created At:</h4>
             <p><?= format_date($report['created_at']) ?></p>
 
@@ -38,9 +42,11 @@ require_once '../helpers/date_helper.php';
                 <a class="btn edit-btn" href="<?= url('report-edit', ['id' => $report['id']]); ?>">
                     <i class="fas fa-edit"></i>
                 </a>
-                <a class="btn delete-btn" href="<?= url('report-delete', ['id' => $report['id']]); ?>">
-                    <i class="fas fa-trash"></i>
-                </a>
+                <?php if (!isAdmin()): ?>
+                    <a class="btn delete-btn" href="<?= url('report-delete', ['id' => $report['id']]); ?>">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                <?php endif; ?>
             </div>
         </article>
 

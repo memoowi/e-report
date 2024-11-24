@@ -11,7 +11,6 @@ class Report
         $this->pdo = Database::getConnection();
     }
 
-    // Create a new report
     public function create($title, $description, $attachment, $user_id)
     {
         $sql = "INSERT INTO reports (title, description, attachment, user_id) VALUES (:title, :description, :attachment, :user_id)";
@@ -23,7 +22,6 @@ class Report
         return $stmt->execute();
     }
 
-    // Read all reports of a user
     public function getByUserId($user_id)
     {
         $sql = "SELECT * FROM reports WHERE user_id = :user_id ORDER BY updated_at DESC";
@@ -33,7 +31,6 @@ class Report
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Read all reports
     public function getAll()
     {
         $sql = "SELECT * FROM reports ORDER BY created_at DESC";
@@ -42,7 +39,6 @@ class Report
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Get a single report by ID
     public function getById($id)
     {
         $sql = "SELECT * FROM reports WHERE id = :id";
@@ -52,7 +48,6 @@ class Report
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Update a report
     public function update($id, $title, $description, $attachment)
     {
         $sql = "UPDATE reports SET title = :title, description = :description, attachment = :attachment, updated_at = NOW() WHERE id = :id";
@@ -64,11 +59,20 @@ class Report
         return $stmt->execute();
     }
 
-    // Delete a report
     public function delete($id)
     {
         $sql = "DELETE FROM reports WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function changeStatus($id, $status, $response)
+    {
+        $sql = "UPDATE reports SET status = :status, response = :response, updated_at = NOW() WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        $stmt->bindParam(':response', $response, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }

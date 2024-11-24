@@ -1,16 +1,16 @@
 <?php
 
-// Import necessary controllers
 require_once '../helpers/url_helper.php';
+require_once '../helpers/auth_helper.php';
 require_once '../controllers/AuthController.php';
 require_once '../controllers/ReportController.php';
-// require_once '../controllers/CommentController.php';
+require_once '../controllers/AdminController.php';
 
-// Define routing logic
-$page = $_GET['page'] ?? 'home'; // Default route
+$page = $_GET['page'] ?? 'home';
 
 $authController = new AuthController();
 $reportController = new ReportController();
+$adminController = new AdminController();
 
 // Authentication routes
 if ($page === 'login') {
@@ -24,34 +24,28 @@ if ($page === 'login') {
 } elseif ($page === 'logout') {
     $authController->logout();
 
-// // Report routes
-// } elseif ($page === 'reports') {
-//     $reportController = new ReportController();
-//     $reportController->index(); // Show all reports
+// User routes
 } elseif ($page === 'report-view') {
-    $reportController->show($_GET['id']); // Show a single report
+    $controller = isAdmin() ? $adminController : $reportController;
+    $controller->show($_GET['id']);
 } elseif ($page === 'report-create') {
-    $reportController->create(); // Show form to create a report
+    $reportController->create(); 
 } elseif ($page === 'report-store') {
-    $reportController->store(); // Handle form submission for new report
+    $reportController->store();
 } elseif ($page === 'report-edit') {
-    $reportController->edit($_GET['id']); // Show form to edit a report
+    $controller = isAdmin() ? $adminController : $reportController;
+    $controller->edit($_GET['id']);
 } elseif ($page === 'report-update') {
     $reportController->update($_POST['id']); // Handle report update
 } elseif ($page === 'report-delete') {
     $reportController->delete($_GET['id']); // Handle report deletion
 
-// // Comment routes
-// } elseif ($page === 'comment_store') {
-//     $commentController = new CommentController();
-//     $commentController->store(); // Handle comment submission
-// } elseif ($page === 'comment_delete') {
-//     $commentController = new CommentController();
-//     $commentController->delete($_GET['id']); // Handle comment deletion
-
-// Default route
+// Admin routes
+} elseif ($page === 'report-update-status') {
+    $adminController->update($_POST['id']);
 } elseif ($page === 'home') {
-    $reportController->index();
+    $controller = isAdmin() ? $adminController : $reportController;
+    $controller->index();
 } else {
     require_once '../views/error-page.php';
 }

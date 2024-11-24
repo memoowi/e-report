@@ -16,10 +16,7 @@ class ReportController
 
     public function index()
     {
-        if (!isAuthenticated()) {
-            redirect('login');
-            exit;
-        }
+        requireAuth();
         $reports = $this->reportModel->getByUserId($_SESSION['user']['id']);
 
         require_once '../views/reports/home.php';
@@ -27,10 +24,7 @@ class ReportController
 
     public function show($id)
     {
-        if (!isAuthenticated()) {
-            redirect('login');
-            exit;
-        }
+        requireAuth();
         $report = $this->reportModel->getById($id);
 
         if (!$report) {
@@ -40,6 +34,7 @@ class ReportController
             if ($report['user_id'] !== $_SESSION['user']['id']) {
                 $error = "You don't have permission to view this report";
                 require_once '../views/error-page.php';
+                exit;
             }
             require_once '../views/reports/view.php';
         }
@@ -47,8 +42,10 @@ class ReportController
 
     public function create()
     {
-        if (!isAuthenticated()) {
-            redirect('login');
+        requireAuth();
+        if (isAdmin()) {
+            $error = "Admin User don't have permission to create a report";
+            require_once '../views/error-page.php';
             exit;
         }
         require_once '../views/reports/create.php';
@@ -106,17 +103,21 @@ class ReportController
 
     public function edit($id)
     {
-        if (!isAuthenticated()) {
-            redirect('login');
+        requireAuth();
+
+        $report = $this->reportModel->getById($id);
+
+        if (!$report) {
+            $error = "Report not found";
+            require_once '../views/error-page.php';
+            return;
+        }
+        if ($report['user_id'] !== $_SESSION['user']['id']) {
+            $error = "You don't have permission to edit this report";
+            require_once '../views/error-page.php';
             exit;
         } else {
-            $report = $this->reportModel->getById($id);
-            if ($report['user_id'] !== $_SESSION['user']['id']) {
-                $error = "You don't have permission to edit this report";
-                require_once '../views/error-page.php';
-            } else {
-                require_once '../views/reports/edit.php';
-            }
+            require_once '../views/reports/edit.php';
         }
     }
 
@@ -126,6 +127,7 @@ class ReportController
             $title = $_POST['title'] ?? '';
             $description = $_POST['description'] ?? '';
             $attachment = $_FILES['attachment'] ?? null;
+            $report = $this->reportModel->getById($id);
 
             if (empty($title) || empty($description)) {
                 $error = "Title and Description fields are required";
@@ -135,7 +137,6 @@ class ReportController
 
             $title = sanitizeString($title);
             $description = sanitizeString($description);
-            $report = $this->reportModel->getById($id);
 
             if ($attachment && $attachment['error'] === UPLOAD_ERR_OK) {
                 $allowedExtensions = ['jpg', 'jpeg', 'png'];
@@ -177,21 +178,19 @@ class ReportController
 
     public function delete($id)
     {
-        if (!isAuthenticated()) {
-            redirect('login');
+        requireAuth();
+
+        $report = $this->reportModel->getById($id);
+        if ($report['user_id'] !== $_SESSION['user']['id']) {
+            $error = "You don't have permission to delete this report";
+            require_once '../views/error-page.php';
             exit;
         } else {
-            $report = $this->reportModel->getById($id);
-            if ($report['user_id'] !== $_SESSION['user']['id']) {
-                $error = "You don't have permission to delete this report";
-                require_once '../views/error-page.php';
-            } else {
-                if ($report['attachment']) {
-                    unlink('./uploads/' . $report['attachment']);
-                }
-                $this->reportModel->delete($id);
-                redirect('home');
+            if ($report['attachment']) {
+                unlink('./uploads/' . $report['attachment']);
             }
+            $this->reportModel->delete($id);
+            redirect('home');
         }
     }
 }
