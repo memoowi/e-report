@@ -1,5 +1,6 @@
 <?php
 require_once '../helpers/auth_helper.php';
+require_once '../helpers/url_helper.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +16,9 @@ require_once '../helpers/auth_helper.php';
 
 <body>
     <header>
-        <h1>E-Report</h1>
+        <a href="<?= url('home'); ?>">
+            <h1>E-Report</h1>
+        </a>
         <nav>
             <?php if (isAuthenticated()): ?>
                 <a class="btn home-btn" href="<?= url('home'); ?>">Home</a>
